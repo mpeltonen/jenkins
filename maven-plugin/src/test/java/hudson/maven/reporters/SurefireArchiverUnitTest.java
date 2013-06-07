@@ -266,6 +266,11 @@ public class SurefireArchiverUnitTest {
         }
 
         @Override
+        public boolean isFingerprintingDisabled() {
+            return false;
+        }
+
+        @Override
         public void registerAsProjectAction(MavenReporter reporter) {
         }
 

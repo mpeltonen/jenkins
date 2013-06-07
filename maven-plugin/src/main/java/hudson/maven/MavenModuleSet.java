@@ -232,7 +232,12 @@ public class MavenModuleSet extends AbstractMavenProject<MavenModuleSet,MavenMod
      * If true, do not archive artifacts to the master.
      */
     private boolean archivingDisabled = false;
-    
+
+    /**
+     * If true, do not create artifact fingerprints.
+     */
+    private boolean fingerprintingDisabled = false;
+
     /**
      * parameter for pom parsing by default <code>false</code> to be faster
      * @since 1.394
@@ -572,6 +577,10 @@ public class MavenModuleSet extends AbstractMavenProject<MavenModuleSet,MavenMod
         return archivingDisabled;
     }
 
+    public boolean isFingerprintingDisabled() {
+        return fingerprintingDisabled;
+    }
+
     public void setIncrementalBuild(boolean incrementalBuild) {
         this.incrementalBuild = incrementalBuild;
     }
@@ -632,7 +641,11 @@ public class MavenModuleSet extends AbstractMavenProject<MavenModuleSet,MavenMod
     public void setIsArchivingDisabled(boolean archivingDisabled) {
         this.archivingDisabled = archivingDisabled;
     }
-    
+
+    public void setIsFingerprintingDisabled(boolean fingerprintingDisabled) {
+        this.fingerprintingDisabled = fingerprintingDisabled;
+    }
+
     public boolean isResolveDependencies()
     {
         return resolveDependencies;
@@ -1148,6 +1161,7 @@ public class MavenModuleSet extends AbstractMavenProject<MavenModuleSet,MavenMod
         runHeadless = req.hasParameter("maven.runHeadless");
         incrementalBuild = req.hasParameter("maven.incrementalBuild");
         archivingDisabled = req.hasParameter("maven.archivingDisabled");
+        fingerprintingDisabled = req.hasParameter("maven.fingerprintingDisabled");
         resolveDependencies = req.hasParameter( "maven.resolveDependencies" );
         processPlugins = req.hasParameter( "maven.processPlugins" );
         mavenValidationLevel = NumberUtils.toInt(req.getParameter("maven.validationLevel"), -1);

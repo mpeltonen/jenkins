@@ -158,6 +158,8 @@ public interface MavenBuildProxy {
      */
     void setExecutedMojos(List<ExecutedMojo> executedMojos);
 
+    boolean isFingerprintingDisabled();
+
     interface BuildCallable<V,T extends Throwable> extends Serializable {
         /**
          * Performs computation and returns the result,
@@ -225,6 +227,10 @@ public interface MavenBuildProxy {
 
         public boolean isArchivingDisabled() {
             return core.isArchivingDisabled();
+        }
+
+        public boolean isFingerprintingDisabled() {
+            return core.isFingerprintingDisabled();
         }
         
         public void registerAsProjectAction(MavenReporter reporter) {

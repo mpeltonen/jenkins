@@ -92,6 +92,9 @@ public class MavenFingerprinter extends MavenReporter {
      * Mojos perform different dependency resolution, so we need to check this for each mojo.
      */
     public boolean postExecute(MavenBuildProxy build, MavenProject pom, MojoInfo mojo, BuildListener listener, Throwable error) throws InterruptedException, IOException {
+        if (build.isFingerprintingDisabled()) {
+            return true;
+        }
         // TODO (kutzi, 2011/09/06): it should be perfectly safe to move all these records to the
         // postBuild method as artifacts should only be added by mojos, but never removed/modified.
 		record(pom.getArtifacts(),used);
@@ -106,7 +109,10 @@ public class MavenFingerprinter extends MavenReporter {
      * Sends the collected fingerprints over to the master and record them.
      */
     public boolean postBuild(MavenBuildProxy build, MavenProject pom, BuildListener listener) throws InterruptedException, IOException {
-        
+        if (build.isFingerprintingDisabled()) {
+            LOGGER.log(Level.INFO, "Fingerprinting disabled, skipping");
+            return true;
+        }
         recordParents(build, pom, listener);
         
         build.executeAsync(new BuildCallable<Void,IOException>() {

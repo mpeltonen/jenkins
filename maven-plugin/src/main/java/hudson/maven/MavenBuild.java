@@ -446,7 +446,11 @@ public class MavenBuild extends AbstractMavenBuild<MavenModule,MavenBuild> {
         public boolean isArchivingDisabled() {
             return MavenBuild.this.getParent().getParent().isArchivingDisabled();
         }
-        
+
+        public boolean isFingerprintingDisabled() {
+            return MavenBuild.this.getParent().getParent().isFingerprintingDisabled();
+        }
+
         public void registerAsProjectAction(MavenReporter reporter) {
             MavenBuild.this.registerAsProjectAction(reporter);
         }
